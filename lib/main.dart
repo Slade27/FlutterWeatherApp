@@ -34,9 +34,12 @@ class _HomeState extends State<Home>{
   var windSpeed;
   var city;
   var weatherIcon;
+  String _loc = "Saskatoon"; //default location
+  String addr = 'http://openweathermap.org/img/w/03d.png';
+  
   
   Future getWeather () async{
-    http.Response response = await http.get("http://api.openweathermap.org/data/2.5/weather?q=Saskatoon&units=metric&appid=87bfbf759166bab256872a776672fa22"); //url and api key
+    http.Response response = await http.get("http://api.openweathermap.org/data/2.5/weather?q=$_loc&units=metric&appid=87bfbf759166bab256872a776672fa22"); //url and api key
     var results = jsonDecode(response.body); //decodes the json file
     //print(results);
     setState(() {
@@ -60,14 +63,18 @@ class _HomeState extends State<Home>{
   
   @override
   Widget build (BuildContext context){
+    addr = 'http://openweathermap.org/img/w/${weatherIcon.toString()}.png';
     return Scaffold(
       body: Column(
         children: <Widget>[
-          TopSection(temp, description, city, weatherIcon),
+          TopSection(temp, description, city, weatherIcon, addr), //Main top section of the app
           Expanded(
               child: ListView(
                 children: [
-                  // Image.network('http://openweathermap.org/img/w/${weatherIcon.toString()}.png',),
+                  TextField(textAlign: TextAlign.center,autocorrect: true,decoration: InputDecoration(hintText: "Enter City"), onSubmitted: (text){
+                    _loc = text;
+                    getWeather();
+                    },),
                   Temp(FaIcon(FontAwesomeIcons.temperatureLow), "Temperature", temp != null ? temp.toString() + "\u00B0": "Loading"), //check if its null and if it is say loading
                   Temp(FaIcon(FontAwesomeIcons.cloud), "Description", description != null ? description.toString(): "Loading"),
                   Temp(FaIcon(FontAwesomeIcons.sun), "Humidity", humidity != null ? humidity.toString()  + "%"  :"Loading"),

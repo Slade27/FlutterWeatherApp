@@ -1,12 +1,17 @@
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 class TopSection extends StatelessWidget {
   var temp;
   var description;
   var city;
   var weatherIcon;
+  var address;
 
-  TopSection(this.temp, this.description, this.city, this.weatherIcon);
+  TopSection(this.temp, this.description, this.city, this.weatherIcon, this.address);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +19,12 @@ class TopSection extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                'http://openweathermap.org/img/w/${weatherIcon.toString()}.png',
+                'http://openweathermap.org/img/w/${weatherIcon.toString()}.png', //adds an image background icon
               ),
               fit: BoxFit.scaleDown,
             ),
             color: Colors.blue),
-        height: MediaQuery.of(context).size.height / 2, // ge the height of dev
+        height: MediaQuery.of(context).size.height / 2.5, // ge the height of dev
         width: MediaQuery.of(context).size.width, //get width,
         //color: Colors.blue,
         child: Column(
@@ -56,6 +61,7 @@ class TopSection extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+    );
   }
 }
