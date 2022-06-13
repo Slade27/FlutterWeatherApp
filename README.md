@@ -1,6 +1,6 @@
 # flutter_practice_app
 
-A new Flutter application.
+A new Flutter application Diaplying basic weather for input city.
 
 ## Getting Started
 
